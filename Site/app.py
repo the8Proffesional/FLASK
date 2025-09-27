@@ -6,7 +6,7 @@ def create_app():
     app = Flask(__name__)
     
     app.register_blueprint(main, url_prefix='/home')
-    app.register_blueprint(about, url_prefix='/about')
+    app.register_blueprint(about)
     @app.route('/')
     def home():
         return render_template("index.html")

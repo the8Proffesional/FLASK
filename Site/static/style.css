@@ -14,11 +14,11 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--secondary-color);
     color: var(--text-color);
-    line-height: 1.7;
-    padding: 40px 20px; /* Espace autour du contenu */
+    line-height: 1.6;
+   
 }
 
 /* Style de la section À propos */
@@ -57,7 +57,7 @@ body {
 
 /* Style pour mettre en évidence les mots clés (utilisés avec <strong>) */
 .content-box p strong {
-    font-weight: 700;
+    font-weight: 400;
     color: var(--primary-color); /* Mettre en évidence les mots importants en bleu */
 }
 

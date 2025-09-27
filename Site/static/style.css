@@ -1,0 +1,70 @@
+/* Réinitialisation de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variables pour les couleurs */
+:root {
+    --primary-color: #0056b3; /* Bleu foncé - Confiance */
+    --secondary-color: #f8f9fa; /* Gris très clair - Fond */
+    --text-color: #333;
+    --highlight-color: #007bff; /* Bleu vif - Accent */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.7;
+    padding: 40px 20px; /* Espace autour du contenu */
+}
+
+/* Style de la section À propos */
+.about-section {
+    max-width: 900px;
+    margin: 0 auto; /* Centrage sur la page */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Ombre douce et élégante */
+    padding: 40px;
+    text-align: center; /* Centrer le titre et le contenu pour un look épuré */
+}
+
+/* Style du titre principal */
+.section-title {
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    border-bottom: 3px solid var(--highlight-color); /* Ligne d'accentuation sous le titre */
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+/* Conteneur du paragraphe */
+.content-box {
+    text-align: left; /* Aligner le texte du paragraphe à gauche pour la lisibilité */
+    padding: 20px 0;
+}
+
+.content-box p {
+    font-size: 1.15rem;
+    font-weight: 300; /* Poids léger pour un look moderne */
+    color: #555;
+}
+
+/* Style pour mettre en évidence les mots clés (utilisés avec <strong>) */
+.content-box p strong {
+    font-weight: 700;
+    color: var(--primary-color); /* Mettre en évidence les mots importants en bleu */
+}
+
+/* Effet pour la phrase d'appel à l'action ou l'élément clé */
+.content-box p:last-of-type {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+    font-style: italic;
+}

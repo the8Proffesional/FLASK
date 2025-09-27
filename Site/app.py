@@ -5,11 +5,9 @@ from about.about import about
 def create_app():
     app = Flask(__name__)
     
-    app.register_blueprint(main, url_prefix='/home')
+    app.register_blueprint(main)
     app.register_blueprint(about)
-    @app.route('/')
-    def home():
-        return render_template("index.html")
+    
     return app
 
 if __name__ == '__main__':

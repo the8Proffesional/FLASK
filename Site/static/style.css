@@ -24,7 +24,7 @@ body {
 /* Style de la section À propos */
 .about-section {
     max-width: 900px;
-    margin: 0 auto; /* Centrage sur la page */
+    margin: 8px auto; /* Centrage sur la page */
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Ombre douce et élégante */
@@ -37,8 +37,7 @@ body {
     font-weight: 700;
     font-size: 2.5rem;
     color: var(--primary-color);
-    margin-bottom: 25px;
-    border-bottom: 3px solid var(--highlight-color); /* Ligne d'accentuation sous le titre */
+    margin-bottom: 8px;
     display: inline-block;
     padding-bottom: 10px;
 }
@@ -63,7 +62,7 @@ body {
 
 /* Effet pour la phrase d'appel à l'action ou l'élément clé */
 .content-box p:last-of-type {
-    margin-top: 20px;
+    margin-top: 8px;
     padding-top: 15px;
     border-top: 1px dashed #ccc;
     font-style: italic;

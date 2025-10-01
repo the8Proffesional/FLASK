@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord-Gestion Arondissements {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Gestion Arondissements </h2>
+                <p>Bienvenue, {{ name }}, sur la gestion Arondissements. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+            </div>
+            
+            <div class="container">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="arrondissementName" class="form-label">Nom de l'arrondissement</label>
+                        <input type="text" class="form-control" id="arrondissementName" name="arrondissementName" required>
+                    </div>
+                    <button type="submit" class="form-control btn btn-success">Ajouter</button>  
+                </form>
+                <table class="table table-striped mt-4 ">
+                    <thead>
+                        <tr>
+                          <th scope="col">Arondissement</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for arrondissement in arrondissements %}
+                        <tr>
+                          <td>{{ arrondissement.arondissement }}</td>
+                          <td>
+                            <form method="POST" action="{{ url_for('dashbord.delete_arrondissement', arrondissement_id=arrondissement.id) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                          </td>
+                        </tr>
+                        {% endfor %}    
+                </table>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+{% endblock %}

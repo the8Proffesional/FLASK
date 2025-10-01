@@ -4,17 +4,21 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 text-center my-3">
-            <h2>Tableau de bord</h2>
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Tableau de bord</h2>
 
-            <p>Bienvenue, {{ name }}, sur le tableau de bord de l'administrateur.<a href="{{ url_for('admin.logout') }}""> Sortir </a></p>
-
-            <p>Bienvenue, {{ name }}, sur le tableau de bord de l'administrateur.</p>
-            <p>gérer les Utilisateurs</p>
-            <p>gérer les marques</p>
-            <p>gérer les type de material</p>
-            <p>gérer les materials</p>
-            <p>gérer les interventions</p>
+                <p>Bienvenue, {{ name }}, sur le tableau de bord de l'administrateur. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+            </div>
+            
+            <div class="container">
+                <p><a href="{{url_for('dashbord.manage_users')}}">Gérer les Utilisateurs</a></p>
+                <p><a href="#">Gérer les marques</a></p>
+                <p><a href="#">Gérer les type de material</a></p>
+                <p><a href="#">Gérer les materials</a></p>
+                <p><a href="#">Gérer les interventions</a></p>
+            </div>
+            
 
         </div>
     </div>

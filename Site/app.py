@@ -4,6 +4,7 @@ from about.about import about
 from admin.admin import adminstration
 from dashbord.dashbord import dashbord
 from extentions import db
+from models import User
 
 def createApp():
     app = Flask(__name__)
@@ -17,8 +18,17 @@ def createApp():
     app.register_blueprint(dashbord)
 
     db.init_app(app)
+    from werkzeug.security import generate_password_hash
 
+    with app.app_context():
+        db.create_all()
+        user = User(name='adil', password=generate_password_hash('infoware'))
 
+        if not User.query.filter_by(name='adil').first():
+            db.session.add(user)
+            db.session.commit() 
+
+    
     return app
     
 

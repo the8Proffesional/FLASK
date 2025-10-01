@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord-Gestion utilisateurs {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Gestion utilisateurs</h2>
+                <p>Bienvenue, {{ name }}, sur la gestion utilisateurs. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+            </div>
+            
+            <div class="container">
+                <p><a href="#">Ajouter un Utilisateurs</a></p>
+                <p><a href="{{ url_for('dashbord.manage_Arrondissements') }}">Gestion des Arondissements</a></p>
+                <p><a href="#">Ajouter un Département</a></p>
+                <p><a href="#">Ajouter un Bureau</a></p>
+                <p><a href="#">Gérer les interventions</a></p>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+{% endblock %}

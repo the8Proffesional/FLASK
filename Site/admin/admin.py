@@ -14,8 +14,11 @@ def admin():
         user = User.query.filter_by(name=username).first()
         if user and check_password_hash(user.password  , password):
             session['user'] = user.name
-            return redirect(url_for('dashbord.dashbord_page'))    
-    return render_template("admin.html")                       
+            return redirect(url_for('dashbord.dashbord_page'))
+    if 'user' in session:
+        return redirect(url_for('dashbord.dashbord_page'))
+    else:  
+        return render_template("admin.html")                       
     
 @adminstration.route('/logout')
 def logout():

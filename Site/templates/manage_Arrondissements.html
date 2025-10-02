@@ -30,9 +30,12 @@
                         <tr>
                           <td>{{ arrondissement.arondissement }}</td>
                           <td>
-                            <form method="POST" action="{{ url_for('dashbord.delete_arrondissement', arrondissement_id=arrondissement.id) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');">
+                            
+                            <form method="POST" action="{{ url_for('arrondissement.delete_arrondissement', arrondissement_id=arrondissement.id) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');">
+                                <a href="{{ url_for('arrondissement.update_arrondissement', arrondissement_id=arrondissement.id) }}" class="btn btn-primary">Modifier</a>
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>
+                           
                           </td>
                         </tr>
                         {% endfor %}    

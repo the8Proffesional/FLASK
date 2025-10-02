@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord-Gestion utilisateurs {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Modifier Arrondissement</h2>
+                <p>Bienvenue, {{ name }}, sur la modification arondissement. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+            </div>
+            
+           <form method="POST">
+                <div class="mb-3">
+                    <label for="arrondissementName" class="form-label">Nom de l'arrondissement</label>
+                    <input type="text" class="form-control" id="arrondissementName" name="arrondissementName" value="{{ arrondissement.arondissement }}" required>
+                    <input type="submit" class="form-control btn btn-success mt-3" value="Mettre à jour">
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

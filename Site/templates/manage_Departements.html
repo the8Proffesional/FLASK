@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord-Gestion Departements {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Gestion Arrondissements </h2>
+                <p>Bienvenue, {{ name }}, sur la gestion Arrondissements. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+                <p><a href="{{ url_for('dashbord.manage_users') }}">Retour à la page gestion utilisateurs</a> </p>
+            </div>
+            
+            <div class="container">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="arrondissementName" class="form-label">Nom de l'arrondissement</label>
+                        <select class="form-control" id="arrondissementName" name="arrondissementName">
+                        <option value="" disabled selected>Choisir un arrondissement</option>
+                        {% for arrondissement in arrondissements %}
+                            <option value="{{ arrondissement.id }}">{{ arrondissement.arondissement }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="departementName" class="form-label">Nom du departement</label>
+                        <input type="text" class="form-control" id="departementName" name="departementName" required>
+                    </div>
+                    <button type="submit" class="form-control btn btn-success">Ajouter</button>  
+                </form>
+                
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+{% endblock %}

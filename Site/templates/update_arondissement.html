@@ -14,8 +14,35 @@
                 <div class="mb-3">
                     <label for="arrondissementName" class="form-label">Nom de l'arrondissement</label>
                     <input type="text" class="form-control" id="arrondissementName" name="arrondissementName" value="{{ arrondissement.arondissement }}" required>
+                </div>
+                {% if departements %}
+                <table class="table table-striped mt-4 ">
+                    <thead>
+                        <tr>
+                          <th scope="col">Departements</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for departement in departements %}
+                        <tr>
+                          <td>{{ departement.departement }}</td>
+                          <td>
+                            
+                            
+                           
+                          </td>
+                        </tr>
+                        {% endfor %}    
+                </table>
+                {% else %}
+                <p class="mt-4 text-danger h4">Aucun departement associé à cet arrondissement.</p>
+                {% endif %} 
+                <div class="mb-3">
                     <input type="submit" class="form-control btn btn-success mt-3" value="Mettre à jour">
                 </div>
+            </form>
+
         </div>
     </div>
 </div>

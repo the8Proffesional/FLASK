@@ -45,4 +45,4 @@ def update_arrondissement(arrondissement_id):
             db.session.commit()
             return redirect(url_for('arrondissement.manage_Arrondissements'))
     
-    return render_template('update_arondissement.html', name=session['user'], arrondissement=arrondissement)
+    return render_template('update_arondissement.html', name=session['user'], arrondissement=arrondissement, departements=arrondissement.departement)

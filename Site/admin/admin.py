@@ -18,7 +18,7 @@ def admin():
     if 'user' in session:
         return redirect(url_for('dashbord.dashbord_page'))
     else:  
-        return render_template("admin.html")                       
+        return render_template("admin.html", message = "Nom d'utilisateur ou mot de passe incorrect")                       
     
 @adminstration.route('/logout')
 def logout():

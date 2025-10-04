@@ -16,7 +16,7 @@
                     <div class="mb-3">
                         <label for="arrondissementName" class="form-label">Nom de l'arrondissement</label>
                         <select class="form-control" id="arrondissementName" name="arrondissementName">
-                        <option value="" disabled selected>Choisir un arrondissement</option>
+                        <option value="" disabled selected >Choisir un arrondissement</option>
                         {% for arrondissement in arrondissements %}
                             <option value="{{ arrondissement.id }}">{{ arrondissement.arondissement }}</option>
                         {% endfor %}

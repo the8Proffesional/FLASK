@@ -21,3 +21,13 @@ def manage_Departements():
     arrondissements = Arondissement.query.all() 
 
     return render_template('manage_Departements.html', name=session['user'], arrondissements=arrondissements)
+
+
+@departement.route('/delete_departement/<int:departement_id>', methods=['GET', 'POST'])
+def delete_departement(departement_id):   
+    if 'user' not in session:
+        return redirect(url_for('admin.admin'))
+    departement = Departement.query.get_or_404(departement_id)
+    db.session.delete(departement)
+    db.session.commit()
+    return redirect(url_for('arrondissement.update_arrondissement', arrondissement_id=departement.arondissement))

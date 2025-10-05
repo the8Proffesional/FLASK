@@ -23,4 +23,4 @@ class Departement(db.Model):
     arondissement = db.Column(db.Integer, db.ForeignKey('arondissement.id'), nullable=False)
 
     def __repr__(self):
-        return f"Departement : {self.departement} - Arondissement : {self.arondissement.arondissement}"
+        return f"Departement : {self.departement} - Arondissement : {self.arondissement}"

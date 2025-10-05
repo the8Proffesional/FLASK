@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord-Gestion utilisateurs {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Modifier Arrondissement</h2>
+                <p>Bienvenue, {{ name }}, sur la modification département. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+                <p><a href="{{ url_for('arrondissement.manage_Arrondissements') }}">Retour à la page gestion arrondissements</a> </p>
+            </div>
+            
+           <form method="POST">
+                <div class="mb-3">
+                    <label for="departementName" class="form-label">Nom du département</label>
+                    <input type="text" class="form-control" id="departementName" name="departementName" value="{{ departement.departement }}" required>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" class="form-control btn btn-success mt-3" value="Mettre à jour">
+                </div>
+            </form>
+                
+               
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -44,3 +44,20 @@ def delete_departement(departement_id):
     db.session.delete(departement)
     db.session.commit()
     return redirect(url_for('arrondissement.update_arrondissement', arrondissement_id=departement.arondissement))
+
+@departement.route('/update_departement/<int:departement_id>', methods=['GET', 'POST'])
+def update_departement(departement_id):
+    if 'user' not in session:
+        return redirect(url_for('admin.admin'))
+    departement = Departement.query.get_or_404(departement_id)
+    if request.method == 'POST':
+        departement_name = request.form['departementName']
+        if departement_name != '':
+            departement.departement = departement_name
+            db.session.commit()
+
+            arrond_id = departement.arondissement
+            arrondissements = Arondissement.query.all()
+            departements = Departement.query.filter_by(arondissement=arrond_id).all()
+            return render_template('manage_Departements.html', name=session['user'], departements=departements, arrondissements=arrondissements, selected_arrondissement=arrond_id)
+    return render_template('update_departement.html', name=session['user'], departement=departement)

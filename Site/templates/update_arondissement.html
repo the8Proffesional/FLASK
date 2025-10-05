@@ -33,11 +33,7 @@
                         <tr>
                           <td>{{ departement.departement }}</td>
                           <td>
-                          
-                    
                              <a href ="{{ url_for('departement.delete_departement', departement_id=departement.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');"  class="btn btn-danger">Supprimer</a>
-                            
-                            
                           </td>
                         </tr>
                         {% endfor %}    

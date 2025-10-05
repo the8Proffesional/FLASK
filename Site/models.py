@@ -27,7 +27,7 @@ class Departement(db.Model):
     
 class Utilisateur(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nomUtilisateur = db.Column(db.String(25), unique=True, nullable=False)
+    nomUtilisateur = db.Column(db.String(50), unique=True, nullable=False)
     departement = db.Column(db.Integer, db.ForeignKey('departement.id'), nullable=False)
 
     def __repr__(self):

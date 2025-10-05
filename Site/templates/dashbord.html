@@ -11,12 +11,12 @@
                 <p>Bienvenue, {{ name }}, sur le tableau de bord de l'administrateur. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
             </div>
             
-            <div class="container">
-                <p><a href="{{url_for('dashbord.manage_users')}}">Gérer les Utilisateurs</a></p>
-                <p><a href="#">Gérer les marques</a></p>
-                <p><a href="#">Gérer les type de material</a></p>
-                <p><a href="#">Gérer les materials</a></p>
-                <p><a href="#">Gérer les interventions</a></p>
+            <div class="container col-8 text-center">
+                <p><a href="{{url_for('dashbord.manage_users')}}" class="col-6 btn btn-primary">Gérer les Affectation</a></p>
+                <p><a href="#" class="col-6 btn btn-primary">Gérer les type de material</a></p>
+                <p><a href="#" class="col-6 btn btn-primary">Gérer les marques</a></p>   
+                <p><a href="#" class="col-6 btn btn-primary">Gérer les materials</a></p>
+                <p><a href="#" class="col-6 btn btn-primary">Gérer les interventions</a></p>
             </div>
             
 

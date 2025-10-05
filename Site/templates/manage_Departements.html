@@ -12,13 +12,13 @@
             </div>
             
             <div class="container">
-                <form method="POST">
+                <form method="POST" action="{{ url_for('departement.manage_Departements') }}"   id="departementForm">   
                     <div class="mb-3">
                         <label for="arrondissementName" class="form-label">Nom de l'arrondissement</label>
                         <select class="form-control" id="arrondissementName" name="arrondissementName">
-                        <option value="" disabled selected >Choisir un arrondissement</option>
+                        <option value="-1" disabled {% if selected_arrondissement == -1 %} selected {% else %} {% endif %} >Choisir un arrondissement</option>
                         {% for arrondissement in arrondissements %}
-                            <option value="{{ arrondissement.id }}">{{ arrondissement.arondissement }}</option>
+                            <option value="{{ arrondissement.id }}"  {% if selected_arrondissement == arrondissement.id %} selected {% endif %} >{{ arrondissement.arondissement }}</option>         
                         {% endfor %}
                         </select>
                     </div>
@@ -28,11 +28,39 @@
                     </div>
                     <button type="submit" class="form-control btn btn-success">Ajouter</button>  
                 </form>
-                
-            </div>
-            
 
+                {% if departements %}
+                <table class="table table-striped  mt-4 ">
+                    <thead>
+                    <tr>
+                      <th scope="col">Departements</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for departement in departements %}
+                    <tr>
+                      <td>{{ departement.departement }}</td>
+                      <td>
+                        <a href ="{{ url_for('departement.delete_departement2', departement_id=departement.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');"  class="btn btn-danger">Supprimer</a>
+                      </td>
+                    </tr>
+                   
+                    {% endfor %}    
+            </table>
+            {% else %}
+                <p class="h5 text-dark  mt-4">Aucun departement pour cet arrondissement</
+            {% endif %}
+            </div>  
         </div>
     </div>
 </div>
+<script>
+    const selectArrondissement = document.getElementById('arrondissementName');
+    myform = document.getElementById('departementForm');
+    selectArrondissement.addEventListener('change', function() {
+        myform.submit()
+    });
+</script>
+
 {% endblock %}

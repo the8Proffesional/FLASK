@@ -7,10 +7,13 @@ from dashbord.arrondissement import arrondissement
 from dashbord.departement import departement
 from extentions import db
 from models import User
+from werkzeug.security import generate_password_hash
 
 def createApp():
+
     app = Flask(__name__)
     app.secret_key = 'infoware'
+
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -22,19 +25,14 @@ def createApp():
     app.register_blueprint(departement)
 
     db.init_app(app)
-    from werkzeug.security import generate_password_hash
-
+    
     with app.app_context():
         db.create_all()
         user = User(name='adil', password=generate_password_hash('infoware'))
-
         if not User.query.filter_by(name='adil').first():
             db.session.add(user)
-            db.session.commit() 
-
-    
+            db.session.commit()
     return app
-    
 
 if __name__ == '__main__':
     createApp().run(debug=True)

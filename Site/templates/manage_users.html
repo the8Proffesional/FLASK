@@ -11,13 +11,10 @@
                 <p><a href="{{ url_for('dashbord.dashbord_page') }}">Retour au tableau de bord</a></p>
             </div>
             
-            <div class="container">
-                <p><a href="#">Ajouter un Utilisateurs</a></p>
-                <p><a href="{{ url_for('arrondissement.manage_Arrondissements') }}">Gestion des Arondissements</a></p>
-                <p><a href="{{ url_for('departement.manage_Departements') }}">Gestion des Département</a></p>
-                <p><a href="#">Gestion des Bureau</a></p>
-                <p><a href="#">Gérer les interventions</a></p>
-                
+            <div class="container col-8 text-center">
+                <p><a href="{{ url_for('arrondissement.manage_Arrondissements') }}" class="col-6 btn btn-success">Gestion des Arondissements</a></p>
+                <p><a href="{{ url_for('departement.manage_Departements') }}" class="col-6 btn btn-success">Gestion des Département</a></p>
+                <p><a href="#" class="col-6 btn btn-success">Ajouter des Utilisateurs</a></p>  
             </div>
             
 

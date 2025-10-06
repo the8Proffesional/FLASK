@@ -5,6 +5,7 @@ from admin.admin import adminstration
 from dashbord.dashbord import dashbord
 from dashbord.arrondissement import arrondissement
 from dashbord.departement import departement
+from dashbord.utilisateur import utilisateur
 from extentions import db
 from models import User
 from werkzeug.security import generate_password_hash
@@ -23,6 +24,7 @@ def createApp():
     app.register_blueprint(dashbord)
     app.register_blueprint(arrondissement)
     app.register_blueprint(departement)
+    app.register_blueprint(utilisateur)
 
     db.init_app(app)
     

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord - Ajout Utilisateur {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Ajout Utilisateur </h2>
+                <p>Bienvenue, {{ name }}, sur la page d'ajout Utilisateur. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+                <p><a href="{{ url_for('dashbord.manage_users') }}">Retour à la page gestion utilisateurs</a> </p>
+            </div>
+            
+            <div class="container">
+                <form method="POST" action=""   id="departementForm">   
+                    <div class="mb-3">
+                        <label for="arrondissementName" class="form-label">Nom de l'arrondissement</label>
+                        <select class="form-control" id="arrondissementName" name="arrondissementName">
+                        <option value="-1" disabled  {% if  selected_arrondissement == -1 %} selected {% endif %}>Choisir un arrondissement</option>
+                        {% for arrondissement in arrondissements %}
+                            <option value="{{ arrondissement.id }}" {% if selected_arrondissement == arrondissement.id %} selected {% endif %}>{{ arrondissement.arondissement }}</option>         
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="departementName" class="form-label">Nom du département</label>
+                        <select class="form-control" id="departementName" name="departementName">
+                        <option value="-1" disabled  {% if  selected_departement == -1 %} selected {% endif %}>Choisir un département</option>
+                        {% for departement in departements %}
+                            <option value="{{ departement.id }}" {% if selected_departement == departement.id %} selected {% endif %}>{{ departement.departement }}</option>         
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="utilisateurName" class="form-label">Nom d'utilisateur</label>
+                        <input type="text" class="form-control" id="utilisateurName" name="utilisateurName" required>
+                    </div>
+                    <button type="submit" class="form-control btn btn-success">Ajouter utilisateur</button>  
+                </form>
+
+                {% if utilisateurs %}
+                <table class="table table-striped  mt-4 ">
+                    <thead>
+                    <tr>
+                      <th scope="col">Utilisateurs</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for utilisateur in utilisateurs %}
+                    <tr>
+                      <td>{{ utilisateur.name }}</td>
+                      <td>
+                        <!-- <a href="{{ url_for('utilisateur.update_utilisateur', utilisateur_id=utilisateur.id) }}" class="btn btn-primary">Modifier</a>
+                        <a href ="{{ url_for('utilisateur.delete_utilisateur', utilisateur_id=utilisateur.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');"  class="btn btn-danger">Supprimer</a> -->
+                      </td>
+                    </tr>
+                   
+                    {% endfor %}    
+            </table>
+            {% else %}
+                <p class="h5 text-dark  mt-4">Aucun departement pour cet arrondissement</
+            {% endif %}
+            </div>  
+        </div>
+    </div>
+</div>
+<script>
+    const selectArrondissement = document.getElementById('arrondissementName');
+    myform = document.getElementById('departementForm');
+    selectArrondissement.addEventListener('change', function() {
+        myform.submit()
+    });
+    const selectDepartement = document.getElementById('departementName');
+    myform = document.getElementById('departementForm');
+    selectDepartement.addEventListener('change', function() {
+        myform.submit()
+    });
+</script>
+
+{% endblock %}

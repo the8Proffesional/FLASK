@@ -12,7 +12,8 @@
             </div>
             
             <div class="container">
-                <form method="POST" action=""   id="departementForm">   
+                <form method="POST" action=""   id="departementForm">  
+
                     <div class="mb-3">
                         <label for="arrondissementName" class="form-label">Nom de l'arrondissement</label>
                         <select class="form-control" id="arrondissementName" name="arrondissementName">
@@ -22,7 +23,10 @@
                         {% endfor %}
                         </select>
                     </div>
+                </form>
+                <form method="POST" action=""   id="departementForm1"> 
                     <div class="mb-3">
+                        <input type="hidden" name="arrondissementName1" value="{{ selected_arrondissement }}">
                         <label for="departementName" class="form-label">Nom du département</label>
                         <select class="form-control" id="departementName" name="departementName">
                         <option value="-1" disabled  {% if  selected_departement == -1 %} selected {% endif %}>Choisir un département</option>
@@ -31,11 +35,16 @@
                         {% endfor %}
                         </select>
                     </div>
+                </form>
+                <form method="POST" action="{{ url_for('utilisateur.manage_Utilisateurs') }}">
                     <div class="mb-3">
+                        <input type="hidden" name="arrondissementName2" value="{{ selected_arrondissement }}">
+                        <input type="hidden" name="departementName1" value="{{ selected_departement }}">
                         <label for="utilisateurName" class="form-label">Nom d'utilisateur</label>
                         <input type="text" class="form-control" id="utilisateurName" name="utilisateurName" required>
                     </div>
-                    <button type="submit" class="form-control btn btn-success">Ajouter utilisateur</button>  
+                    <button type="submit" class="form-control btn btn-success">Ajouter utilisateur</button>
+
                 </form>
 
                 {% if utilisateurs %}
@@ -49,11 +58,9 @@
                   <tbody>
                     {% for utilisateur in utilisateurs %}
                     <tr>
-                      <td>{{ utilisateur.name }}</td>
+                      <td>{{ utilisateur.nomUtilisateur }}</td>
                       <td>
-                        <!-- <a href="{{ url_for('utilisateur.update_utilisateur', utilisateur_id=utilisateur.id) }}" class="btn btn-primary">Modifier</a>
-                        <a href ="{{ url_for('utilisateur.delete_utilisateur', utilisateur_id=utilisateur.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');"  class="btn btn-danger">Supprimer</a> -->
-                      </td>
+                       
                     </tr>
                    
                     {% endfor %}    
@@ -72,9 +79,9 @@
         myform.submit()
     });
     const selectDepartement = document.getElementById('departementName');
-    myform = document.getElementById('departementForm');
+    myform1 = document.getElementById('departementForm1');
     selectDepartement.addEventListener('change', function() {
-        myform.submit()
+        myform1.submit()
     });
 </script>
 

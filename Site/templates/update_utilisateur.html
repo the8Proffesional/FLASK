@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord - Ajout Utilisateur {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Modifier Arrondissement</h2>
+                <p>Bienvenue, {{ name }}, sur la modification utilsateur. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+                <p><a href="{{ url_for('arrondissement.manage_Arrondissements') }}">Retour à la page gestion arrondissements</a> </p>
+            </div>
+            
+           <form method="POST">
+                <div class="mb-3">
+                    <h3>Arrondissement: {{ arrondissement.arondissement }}</h3>
+                    <h3>departement: {{ departement.departement }}</h3>
+                    <label for="utilsateurName" class="form-label">Nom Utilsateur</label>
+                    <input type="text" class="form-control" id="utilsateurName" name="utilsateurName" value="{{ utilisateur.nomUtilisateur }}" required>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" class="form-control btn btn-success mt-3" value="Mettre à jour">
+                </div>
+            </form>
+                
+               
+
+        </div>
+    </div>
+</div>
+{% endblock %}

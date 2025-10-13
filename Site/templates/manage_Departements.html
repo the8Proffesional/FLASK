@@ -34,7 +34,7 @@
                     <thead>
                     <tr>
                       <th scope="col">Departements</th>
-                      <th scope="col">Action</th>
+                      <th class="float-end" scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -42,8 +42,10 @@
                     <tr>
                       <td>{{ departement.departement }}</td>
                       <td>
-                        <a href="{{ url_for('departement.update_departement', departement_id=departement.id) }}" class="btn btn-primary">Modifier</a>
-                        <a href ="{{ url_for('departement.delete_departement2', departement_id=departement.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');"  class="btn btn-danger">Supprimer</a>
+                        <div class="btn-group float-end" role="group" aria-label="Basic example">
+                            <a href="{{ url_for('departement.update_departement', departement_id=departement.id) }}" class="btn btn-primary">Modifier</a>
+                            <a href ="{{ url_for('departement.delete_departement2', departement_id=departement.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');"  class="btn btn-danger">Supprimer</a>
+                        </div>
                       </td>
                     </tr>
                    

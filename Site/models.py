@@ -31,4 +31,4 @@ class Utilisateur(db.Model):
     departement = db.Column(db.Integer, db.ForeignKey('departement.id'), nullable=False)
 
     def __repr__(self):
-        return f"Nom : {self.nomUtilisateur} - Departement : {self.departemente}"
+        return f"Nom : {self.nomUtilisateur} - Departement : {self.departement}"

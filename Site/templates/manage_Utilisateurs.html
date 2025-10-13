@@ -52,7 +52,7 @@
                     <thead>
                     <tr>
                       <th scope="col">Utilisateurs</th>
-                      <th scope="col">Action</th>
+                      <th class="float-end" scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -60,10 +60,15 @@
                     <tr>
                       <td>{{ utilisateur.nomUtilisateur }}</td>
                       <td>
-                       
+                        <div class="btn-group float-end" role="group" aria-label="Basic example">
+                            <a href="{{ url_for('utilisateur.update_Utilisateur', id=utilisateur.id) }}" class="btn btn-warning">Modifier</a>
+                            <a href="{{ url_for('utilisateur.delete_Utilisateur', id=utilisateur.id) }}" class="btn btn-danger">Supprimer</a>
+                        </div>
+                        
+                        </td>
                     </tr>
-                   
-                    {% endfor %}    
+                    {% endfor %}
+                </tbody>
             </table>
             {% else %}
                 <p class="h5 text-dark  mt-4">Aucun departement pour cet arrondissement</

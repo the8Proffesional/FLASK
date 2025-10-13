@@ -23,7 +23,7 @@
                     <thead>
                         <tr>
                           <th scope="col">Arrondissement</th>
-                          <th scope="col">Action</th>
+                          <th class="float-end" scope="col">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -31,15 +31,17 @@
                         <tr>
                           <td>{{ arrondissement.arondissement }}</td>
                           <td>
+                            <div class="btn-group float-end" role="group" aria-label="Basic example">
+                                <form method="POST" action="{{ url_for('arrondissement.delete_arrondissement', arrondissement_id=arrondissement.id) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');">
+                                    <a href="{{ url_for('arrondissement.update_arrondissement', arrondissement_id=arrondissement.id) }}" class="btn btn-primary">Modifier</a>
+                                    {% if arrondissement.departement | length == 0 %}
+                                        <button type="submit" class="btn btn-danger">Supprimer</button> 
+                                    {% else %}  
+                                        <span class="badge text-bg-warning"> {{ arrondissement.departement | length }} Departements</span>
+                                    {% endif %}
+                                </form>
+                            </div>
                             
-                            <form method="POST" action="{{ url_for('arrondissement.delete_arrondissement', arrondissement_id=arrondissement.id) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet arrondissement ?');">
-                                <a href="{{ url_for('arrondissement.update_arrondissement', arrondissement_id=arrondissement.id) }}" class="btn btn-primary">Modifier</a>
-                                {% if arrondissement.departement | length == 0 %}
-                                   <button type="submit" class="btn btn-danger">Supprimer</button> 
-                                {% else %}  
-                                    <span class="badge text-bg-warning"> {{ arrondissement.departement | length }} Departements</span>
-                                {% endif %}
-                            </form>
                             
                           </td>
                           

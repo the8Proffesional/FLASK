@@ -15,10 +15,12 @@ def admin():
         if user and check_password_hash(user.password  , password):
             session['user'] = user.name
             return redirect(url_for('dashbord.dashbord_page'))
+        else:
+            return render_template("admin.html", message = "Nom d'utilisateur ou mot de passe incorrect")
     if 'user' in session:
         return redirect(url_for('dashbord.dashbord_page'))
-    else:  
-        return render_template("admin.html", message = "Nom d'utilisateur ou mot de passe incorrect")                       
+    else:
+        return render_template("admin.html")                       
     
 @adminstration.route('/logout')
 def logout():

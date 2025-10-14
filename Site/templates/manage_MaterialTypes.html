@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord - Ajout type de matériel {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Ajout type de matériel</h2>
+                <p>Bienvenue, {{ name }}, sur la page d'ajout de type de matériel. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+                <p><a href="{{ url_for('dashbord.dashbord_page') }}">Retour à la page Tableau de bord</a> </p>
+            </div>
+            
+            <div class="container">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="materialTypeName" class="form-label">Nom du type de matériel</label>
+                        <input type="text" class="form-control" id="materialTypeName" name="materialTypeName" required>
+                    </div>
+                    <button type="submit" class="form-control btn btn-success">Ajouter type de matériel</button>  
+                </form>
+                <table class="table table-striped mt-4 ">
+                    <thead>
+                        <tr>
+                          <th scope="col">Type de matériel</th>
+                          <th class="float-end" scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for materialType in materialTypes %}
+                        <tr>
+                          <td>{{ materialType.typeMaterial }}</td>
+                          <td>
+                           
+                            
+                            
+                          </td>
+                          
+                        </tr>
+                        {% endfor %}    
+                </table>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

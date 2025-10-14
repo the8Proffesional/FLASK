@@ -6,6 +6,7 @@ from dashbord.dashbord import dashbord
 from dashbord.arrondissement import arrondissement
 from dashbord.departement import departement
 from dashbord.utilisateur import utilisateur
+from dashbord.materialType import Material_Types
 from extentions import db
 from models import User
 from werkzeug.security import generate_password_hash
@@ -25,6 +26,7 @@ def createApp():
     app.register_blueprint(arrondissement)
     app.register_blueprint(departement)
     app.register_blueprint(utilisateur)
+    app.register_blueprint(Material_Types)
 
     db.init_app(app)
     

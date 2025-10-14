@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request
 from flask import session
 from models import Arondissement, Departement, Utilisateur
 from extentions import db   

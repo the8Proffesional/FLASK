@@ -32,3 +32,10 @@ class Utilisateur(db.Model):
 
     def __repr__(self):
         return f"Nom : {self.nomUtilisateur} - Departement : {self.departement}"
+    
+class MaterialType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    typeMaterial = db.Column(db.String(50), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"Type Material : {self.typeMaterial}"

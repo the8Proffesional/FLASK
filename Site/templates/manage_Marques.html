@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord - Ajout Marques {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Ajout Marques</h2>
+                <p>Bienvenue, {{ name }}, sur la page d'ajout de Marques. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+                <p><a href="{{ url_for('dashbord.dashbord_page') }}">Retour à la page Tableau de bord</a> </p>
+            </div>
+            
+            <div class="container">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="Marque" class="form-label">Nom de la Marque</label>
+                        <input type="text" class="form-control" id="Marque" name="Marque" required>
+                    </div>
+                    <button type="submit" class="form-control btn btn-success">Ajouter Marque</button>  
+                </form>
+                <table class="table table-striped mt-4 ">
+                    <thead>
+                        <tr>
+                          <th scope="col">Marque</th>
+                          <th class="float-end" scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for Marque in Marques %}
+                        <tr>
+                          <td>{{ Marque.MarqueName }}</td>
+                          <td>
+                            <div class="btn-group float-end" role="group" aria-label="Basic example">
+                                <a href="{{ url_for('marques.update_Marque', Marque_id=Marque.id) }}" class="btn btn-primary">Modifier</a>
+                                <a href ="{{ url_for('marques.delete_Marque', Marque_id=Marque.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette Marque ?');"  class="btn btn-danger">Supprimer</a>
+                            </div>
+                          </td>
+                        </tr>
+                        {% endfor %}    
+                </table>
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

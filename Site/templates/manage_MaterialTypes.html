@@ -31,11 +31,11 @@
                         <tr>
                           <td>{{ materialType.typeMaterial }}</td>
                           <td>
-                           
-                            
-                            
+                            <div class="btn-group float-end" role="group" aria-label="Basic example">
+                                <a href="{{ url_for('materialTypes.update_materialType', materialType_id=materialType.id) }}" class="btn btn-primary">Modifier</a>
+                                <a href ="{{ url_for('materialTypes.delete_materialType', materialType_id=materialType.id) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce type de matériel ?');"  class="btn btn-danger">Supprimer</a>
+                            </div>
                           </td>
-                          
                         </tr>
                         {% endfor %}    
                 </table>

@@ -32,6 +32,23 @@ def manage_Models():
         return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=True, selected_TypeMaterial=selected_TypeMaterial, selected_Marque=selected_Marque)
     return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=False)
 
+@ModelMaterial.route('/update_Model/<int:model_id>', methods=['GET', 'POST'])
+def update_model(model_id):   
+    if 'user' not in session:
+        return redirect(url_for('adminstration.login')) 
+    model = Model.query.get_or_404(model_id)
+    MaterialTypeName = MaterialType.query.get_or_404(model.type_material_id)
+    MarqueName = Marque.query.get_or_404(model.marque_id)
+    if request.method == 'POST':
+        ModelName = request.form.get('ModelName')
+        support = request.form.get('SupportName')
+        model.modelname = ModelName
+        model.support_uri = support
+        db.session.commit()
+        return redirect(url_for('model_material.manage_Models'))
+    return render_template('update_Material.html', name=session['user'], model=model, MaterialTypeName=MaterialTypeName, MarqueName=MarqueName)
+
+
 @ModelMaterial.route('/delete_Models/<int:model_id>', methods=['GET'])
 def delete_model(model_id):
     model = Model.query.get_or_404(model_id)

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord - Ajout Material {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Ajout Material</h2>
+                <p>Bienvenue, {{ name }}, sur la page d'ajout Material. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+                <p><a href="{{ url_for('dashbord.dashbord_page') }}">Retour au Tableau de bord</a> </p>
+            </div>
+            
+            <div class="container">
+                <form method="POST" action="{{ url_for('model_material.manage_Models') }}"> 
+                    <div class="mb-3">
+                        <label for="TypeName" class="form-label">Type de matériel</label>
+                        <select class="form-control" id="TypeName" name="TypeName">
+                        <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir un type de matériel</option>
+                        {% for TypeMaterial in TypeMaterials %}
+                            <option value="{{ TypeMaterial.id }}" {% if selected_TypeMaterial == TypeMaterial.id %} selected {% endif %}>{{ TypeMaterial.typeMaterial }}</option>         
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" name="TypeMaterialName1" value="{{ selected_TypeMaterial }}">
+                        <label for="MarqueName" class="form-label">Nom de la marque</label>
+                        <select class="form-control" id="MarqueName" name="MarqueName">
+                        <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir une marque</option>
+                        {% for Marque in Marques %}
+                            <option value="{{ Marque.id }}" {% if selected_Marque == Marque.id %} selected {% endif %}>{{ Marque.MarqueName }}</option>         
+                        {% endfor %}
+                        </select>
+                    </div>
+             
+                    <div class="mb-3">
+                        <label for="ModelName" class="form-label">Modèle matériel</label>
+                        <input type="text" class="form-control" id="ModelName" name="ModelName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="SupportName" class="form-label">Support matériel</label>
+                        <input type="text" class="form-control" id="SupportName" name="SupportName" required>
+                    </div>
+                    <button type="submit" class="form-control btn btn-success">Ajouter Modèle</button>
+
+                </form>
+
+                {% if models %}
+                <table class="table table-striped  mt-4 ">
+                    <thead>
+                    <tr>
+                      <th scope="col">Modèle matériel</th>
+                      <th class="float-end" scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for model in models %}
+                    <tr>
+                      <td>{{ model.modelname }}</td>
+                      <td>
+                        <div class="btn-group float-end" role="group" aria-label="Basic example">
+                            <a href="{{ model.support_uri }}" target="blank" class="btn btn-primary">Support</a>
+                            <a href="" class="btn btn-warning">Modifier</a>
+                            <a href="{{ url_for('model_material.delete_model', model_id=model.id) }}" class="btn btn-danger">Supprimer</a>
+                        </div>
+                        
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p class="h5 text-dark  mt-4">Aucun Modèle</p>
+            {% endif %}
+            </div>  
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

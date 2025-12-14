@@ -1,4 +1,5 @@
 from flask import  Flask
+from dashbord.models import ModelMaterial
 from main.main import main
 from about.about import about
 from admin.admin import adminstration
@@ -30,6 +31,7 @@ def createApp():
     app.register_blueprint(utilisateur)
     app.register_blueprint(Material_Types)
     app.register_blueprint(Marques)
+    app.register_blueprint(ModelMaterial)
 
     db.init_app(app)
     

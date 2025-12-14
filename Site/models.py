@@ -46,3 +46,13 @@ class Marque(db.Model):
 
     def __repr__(self):
         return f"Marque : {self.MarqueName}"
+
+class Model(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    modelname = db.Column(db.String(50), unique=True, nullable=False)
+    type_material_id = db.Column(db.Integer, db.ForeignKey('material_type.id'), nullable=False)
+    marque_id = db.Column(db.Integer, db.ForeignKey('marque.id'), nullable=False)
+    support_uri = db.Column(db.String(200), unique=False, nullable=True)
+
+    def __repr__(self):
+        return f"Model : {self.modelname} - Type Material ID : {self.type_material_id} - Marque ID : {self.marque_id}"

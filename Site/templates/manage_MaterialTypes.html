@@ -8,7 +8,7 @@
             <div class="text-center">
                 <h2>Ajout type de matériel</h2>
                 <p>Bienvenue, {{ name }}, sur la page d'ajout de type de matériel. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
-                <p><a href="{{ url_for('dashbord.dashbord_page') }}">Retour à la page Tableau de bord</a> </p>
+                <p><a href="{{ url_for('{{ url_for('dashbord.dashbord_page') }}') }}">Retour à la page Tableau de bord</a> </p>
             </div>
             
             <div class="container">

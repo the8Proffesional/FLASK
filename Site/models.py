@@ -56,3 +56,13 @@ class Model(db.Model):
 
     def __repr__(self):
         return f"Model : {self.modelname} - Type Material ID : {self.type_material_id} - Marque ID : {self.marque_id}"
+
+class Material(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    serial_number = db.Column(db.String(100), unique=True, nullable=False)
+    inventaire_number = db.Column(db.String(10), unique=True, nullable=True)
+    model_id = db.Column(db.Integer, db.ForeignKey('model.id'), nullable=False)
+    utilisateur_id = db.Column(db.Integer, db.ForeignKey('utilisateur.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Material : {self.serial_number} - Model ID : {self.model_id} - Utilisateur ID : {self.utilisateur_id}"

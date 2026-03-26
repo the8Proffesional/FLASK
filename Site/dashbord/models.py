@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask import session
-from models import Arondissement, Departement, MaterialType, Marque, Model, Utilisateur
+from models import  MaterialType, Marque, Model
 from extentions import db   
 
 ModelMaterial = Blueprint('model_material', __name__, template_folder='templates')

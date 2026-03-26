@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %} Tableau de bord - Ajout Matèrial {% endblock %}
+
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12  my-3">
+            <div class="text-center">
+                <h2>Ajout Matèrial</h2>
+                <p>Bienvenue, {{ name }}, sur la page d'ajout Matèrial. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
+                <p><a href="{{ url_for('dashbord.dashbord_page') }}">Retour au Tableau de bord</a> </p>
+            </div>
+            <div class="container">
+                <form method="POST" action="{{ url_for('material.manage_Materials') }}"> 
+                    <div class="mb-3">
+                        <label for="ModelId" class="form-label">Choisir un modèle</label>
+                        <select class="form-control" id="ModelId" name="ModelId">
+                        <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir un type de matériel</option>
+                        {% for model in models %}
+                            <option value="{{ model.id }}" {% if selected_Model == model.id %} selected {% endif %}>{{ model.modelname }}</option>         
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" name="TypeMaterialName1" value="{{ selected_TypeMaterial }}">
+                        <label for="UserId" class="form-label">Choisir l'utilisateur</label>
+                        <select class="form-control" id="UserId" name="UserId">
+                        <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir un utilisateur</option>
+                        {% for utilisateur in utilisateurs %}
+                            <option value="{{ utilisateur.id }}" {% if selected_User == utilisateur.id %} selected {% endif %}>{{ utilisateur.nomUtilisateur }}</option>         
+                        {% endfor %}
+                        </select>
+                    </div>
+             
+                    <div class="mb-3">
+                        <label for="ort" class="form-label">Numéro invantaire</label>
+                        <input type="text" class="form-control" id="ort" name="ort" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sn" class="form-label">Numéro de Série</label>
+                        <input type="text" class="form-control" id="sn" name="sn" required>
+                    </div>
+                    <button type="submit" class="form-control btn btn-success">Ajouter Matérial</button>
+
+                </form>
+
+                {% if materials %}
+                <table class="table table-striped  mt-4 ">
+                    <thead>
+                    <tr>
+                      <th scope="col">Modèle matériel</th>
+                      <th scope="col">ORT</th>
+                      
+                      <th scope="col">Numéro de Série</th>
+                      <th scope="col">Utilisateur</th>
+                      <th class="float-end" scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in list %}
+                    <tr>
+                      <td> {{ item[2] }} {{ item[3]}} {{ item[1] }} </td>
+                      <td>{{ item[0].inventaire_number }}</td>
+                      <td>{{ item[0].serial_number }}</td>
+                      <td>{{ item[4] }}</td>
+                      <td>
+                        <div class="btn-group float-end" role="group" aria-label="Basic example">
+                            <a href="#" class="btn btn-warning">Modifier</a>
+                            <a href="#" class="btn btn-danger">Supprimer</a>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p class="h5 text-dark  mt-4">Aucun Matériel</p>
+            {% endif %}
+            </div>  
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

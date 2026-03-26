@@ -9,6 +9,7 @@ from dashbord.departement import departement
 from dashbord.utilisateur import utilisateur
 from dashbord.materialType import Material_Types
 from dashbord.marques import Marques
+from dashbord.material import material
 
 from extentions import db
 from models import User
@@ -32,6 +33,7 @@ def createApp():
     app.register_blueprint(Material_Types)
     app.register_blueprint(Marques)
     app.register_blueprint(ModelMaterial)
+    app.register_blueprint(material)
 
     db.init_app(app)
     

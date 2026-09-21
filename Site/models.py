@@ -66,3 +66,24 @@ class Material(db.Model):
 
     def __repr__(self):
         return f"Material : {self.serial_number} - Model ID : {self.model_id} - Utilisateur ID : {self.utilisateur_id}"
+
+class OsVersions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    os_version = db.Column(db.String(50), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"OS Version : {self.os_version}"
+
+class Officeversions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    office_version = db.Column(db.String(50), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"Office Version : {self.office_version}"
+
+class Antivirus(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    antivirus_name = db.Column(db.String(50), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"Antivirus : {self.antivirus_name}"

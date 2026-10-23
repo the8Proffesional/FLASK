@@ -110,14 +110,14 @@
 
                 <div class="container">
                     {% if list %}
-                    <h4 class="mt-4">Matériels</h4>
+                    <h4 class="mt-4">Matériels pour {{ list[0][4] }}</h4>
                     <table class="table table-striped  mt-4 ">
                         <thead>
                         <tr>
                           <th scope="col">Numéro invantaire</th>
                           <th scope="col">Numéro de Série</th>
                           <th scope="col">Modèle</th>
-                          <th scope="col">Utilisateur</th>
+                          <th scope="col">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -126,7 +126,13 @@
                           <td>{{ material[0].inventaire_number }}</td>
                           <td>{{ material[0].serial_number }}</td>
                           <td> {{ material[2] }} {{ material[3] }} {{ material[1] }}</td>
-                          <td>{{ material[4] }}</td>
+                          <td>
+                            <div class="btn-group float-end" role="group" aria-label="Basic example">
+                            <a href="#" target="blank" class="btn btn-primary">Details</a>
+                            <a href="#" class="btn btn-warning">Modifier</a>
+                            <a href="#" class="btn btn-danger">Supprimer</a>
+                        </div>
+                          </td>
                         </tr>
                         {% endfor %}
                       </tbody>

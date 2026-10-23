@@ -12,7 +12,8 @@ from dashbord.marques import Marques
 from dashbord.material import material
 
 from extentions import db
-from models import User, OsVersions, Officeversions, Antivirus
+from models import User, OsVersions, Officeversions, Antivirus, MaterialType, Marque
+
 from werkzeug.security import generate_password_hash
 
 def createApp():
@@ -38,7 +39,33 @@ def createApp():
     
 
     db.init_app(app)
-    os_versions = ["Windows 10", "Windows 11", "Windows 8.1", "Windows 7"]
+    TypesMaterial = [
+        "Ordinateur Portable",
+        "Ordinateur de Bureau",
+        "Imprimante Laser B/W",
+        "Imprimante Laser Couleur",
+        "Scanner",
+        "Onduleur",
+    ]
+    Material_Marques = [
+        "HP",
+        "Dell",
+        "Lenovo",
+        "Acer",
+        "Epson",
+        "Canon",
+        "Samsung",
+    ]
+
+
+
+
+    os_versions = [
+        "Windows 11",
+        "Windows 10",
+        "Windows 8.1",
+        "Windows 7"
+    ]
     
     office_versions = [
         "Microsoft Office 2010",
@@ -55,7 +82,20 @@ def createApp():
     ]
 
     with app.app_context():
-        
+        db.create_all()
+        db.session.commit()
+
+
+        for type_material in TypesMaterial:
+            if not MaterialType.query.filter_by(typeMaterial=type_material).first():
+                db.session.add(MaterialType(typeMaterial=type_material))
+                db.session.commit()
+        for marque in Material_Marques:
+            if not Marque.query.filter_by(MarqueName=marque).first():
+                db.session.add(Marque(MarqueName=marque))
+                db.session.commit()
+
+
 
         for version in os_versions:
             if not OsVersions.query.filter_by(os_version=version).first():
@@ -76,8 +116,7 @@ def createApp():
         if not User.query.filter_by(name='adil').first():
             db.session.add(user)
             db.session.commit()
-
-        db.create_all()
+        
     return app
 
 if __name__ == '__main__':

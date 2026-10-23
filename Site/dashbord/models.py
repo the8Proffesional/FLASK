@@ -29,6 +29,7 @@ def manage_Models():
         db.session.add(new_model)
         db.session.commit()
         models = Model.query.all()
+        
         return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=True, selected_TypeMaterial=selected_TypeMaterial, selected_Marque=selected_Marque)
     return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=False)
 

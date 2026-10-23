@@ -56,7 +56,7 @@
                   <tbody>
                     {% for model in models %}
                     <tr>
-                      <td>{{ TypeMaterials[model.type_material_id-1].typeMaterial }} {{ Marques[model.marque_id-1].MarqueName }} {{ model.modelname }}</td>
+                      <td>{{ TypeMaterials[model.type_material_id-3].typeMaterial }} {{ Marques[model.marque_id-1].MarqueName }} {{ model.modelname }}</td>
                       <td>
                         <div class="btn-group float-end" role="group" aria-label="Basic example">
                             <a href="{{ model.support_uri }}" target="blank" class="btn btn-primary">Support</a>

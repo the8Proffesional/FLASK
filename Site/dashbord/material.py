@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask import session
-from models import Arondissement,  Departement, Marque, MaterialType, Material, Model, Utilisateur
+from models import Arondissement,  Departement, Marque, MaterialType, Material, Model, Utilisateur, OsVersions, Officeversions, Antivirus
 from extentions import db   
 
 
@@ -12,6 +12,7 @@ def manage_Materials():
         return redirect(url_for('adminstration.login'))
     
     arrondissements = Arondissement.query.all()
+    
     types=MaterialType.query.all()
     if request.method == 'POST':
         
@@ -48,6 +49,11 @@ def manage_Materials():
         
         if 'TypeId' in request.form:
             TypeId = request.form.get('TypeId', type=int)
+            if TypeId == 4 or TypeId == 5:
+                osversions = OsVersions.query.all()
+                officeVersions = Officeversions.query.all()
+                antivirus = Antivirus.query.all()
+                
             arrondissementId = request.form.get('arrondissementName1', type=int)
             departementId = request.form.get('departementName1', type=int)
             userId = request.form.get('UserId1', type=int)
@@ -63,7 +69,7 @@ def manage_Materials():
                 modelList.append([material, model.modelname, MaterialTypeName.typeMaterial, marqueName.MarqueName, user_name.nomUtilisateur])
             models = Model.query.filter_by(type_material_id=TypeId).all()
             Model_id = request.form.get('ModelId', type=int)
-            return render_template('Manage_Material.html',  name=session['user'], submitted=False, arrondissements=arrondissements, departements=departements, utilisateurs=utilisateurs, selected_User=userId, selected_Departement=departementId, selected_arrondissement=arrondissementId, types=types, list=modelList, models=models, selected_Type=TypeId, selected_Model=Model_id)
+            return render_template('Manage_Material.html',  name=session['user'], submitted=False, arrondissements=arrondissements, departements=departements, utilisateurs=utilisateurs, selected_User=userId, selected_Departement=departementId, selected_arrondissement=arrondissementId, types=types, list=modelList, models=models, selected_Type=TypeId, selected_Model=Model_id, osversions=osversions, officeVersions=officeVersions, antivirus=antivirus)
         
         if 'ModelId' in request.form and 'UserId1' in request.form:
             arrondissementId = request.form.get('arrondissementName1', type=int)

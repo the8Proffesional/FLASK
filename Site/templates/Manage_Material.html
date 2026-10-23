@@ -100,6 +100,40 @@
                         <label for="sn" class="form-label">Numéro de Série</label>
                         <input type="text" class="form-control" id="sn" name="sn" required>
                     </div>
+                    {% if selected_Type == 4 or selected_Type == 5 %}
+                        <div class="mb-3">
+                            <label for="osversion" class="form-label">Version du système d'exploitation</label>
+                            <select class="form-control" id="osversion" name="osversion">
+                            <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir une version</option>
+                            {% for osversion in osversions %}
+                                <option value="{{ osversion.id }}" {% if selected_OsVersion == osversion.id %} selected {% endif %}>{{ osversion.os_version }}</option>         
+                            {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="officeVersion" class="form-label">Version de Microsoft Office</label>
+                            <select class="form-control" id="officeVersion" name="officeVersion">
+                                <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir une version d'Office</option>
+                                {% for officeversion in officeVersions %}
+                                    <option value="{{ officeversion.id }}" {% if selected_OfficeVersion == officeversion.id %} selected {% endif %}>{{ officeversion.office_version }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="antivirus" class="form-label">Antivirus</label>
+                            <select class="form-control" id="antivirus" name="antivirus">
+                                <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir un antivirus</option>
+                                {% for antivirus in antivirus %}
+                                    <option value="{{ antivirus.id }}" {% if selected_Antivirus == antivirus.id %} selected {% endif %}>{{ antivirus.antivirus_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+
+
+
                     <input type="hidden" name="arrondissementName1" value="{{ selected_arrondissement }}">
                     <input type="hidden" name="departementName1" value="{{ selected_Departement }}">
                     <input type="hidden" name="UserId1" value="{{ selected_User }}">

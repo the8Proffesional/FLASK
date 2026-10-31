@@ -25,4 +25,4 @@ def admin():
 @adminstration.route('/logout')
 def logout():
     session.pop('user', None)
-    return redirect('admin')
+    return redirect(url_for('main.home'))

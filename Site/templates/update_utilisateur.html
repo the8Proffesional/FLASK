@@ -17,6 +17,8 @@
                     <h3>departement: {{ departement.departement }}</h3>
                     <label for="utilsateurName" class="form-label">Nom Utilsateur</label>
                     <input type="text" class="form-control" id="utilsateurName" name="utilsateurName" value="{{ utilisateur.nomUtilisateur }}" required>
+                    <label for="telephone" class="form-label">Téléphone</label>
+                    <input type="text" class="form-control" id="telephone" name="telephone" value="{{ utilisateur.Telephone }}">
                 </div>
                 <div class="mb-3">
                     <input type="submit" class="form-control btn btn-success mt-3" value="Mettre à jour">

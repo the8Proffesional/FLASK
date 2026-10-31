@@ -6,6 +6,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12  my-3">
+
             <div class="text-center">
                 <h2>Ajout Matèrial</h2>
                 <p>Bienvenue, {{ name }}, sur la page d'ajout Matèrial. <a class="mx-3 btn btn-primary" href="{{ url_for('admin.logout') }}"">Déconnecter</a></p>
@@ -13,9 +14,10 @@
             </div>
 
             <div class="container">
-                    <h4>Utilisateur du matérial</h4>
+                
+                <h4>Afféctation</h4>
 
-                    <form method="POST" action=""   id="arrondissementForm">
+                <form method="POST" action=""   id="arrondissementForm">
                     <div class="mb-3">
                         <select class="form-control" id="arondissementId" name="arondissementId">
                         <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir un arrondissement</option>
@@ -24,13 +26,13 @@
                         {% endfor %}
                         </select>
                     </div>
-                    </form>
-                    
-
-                    {% if not departements %}
-                        <p class="text-danger">Aucun département disponible</p>
-                    {% else %}
-                    <form method="POST" action=""   id="departementForm">
+                </form>
+                {% if not departements %}
+                    {% if selected_arrondissement and selected_arrondissement != -1 %}
+                    <p class="text-danger">Aucun département disponible</p>
+                    {% endif %}
+                {% else %}
+                <form method="POST" action=""   id="departementForm">
                     <div class="mb-3">
                         <input type="hidden" name="arrondissementName1" value="{{ selected_arrondissement }}">
                         <select class="form-control" id="DepartementId" name="DepartementId">
@@ -40,13 +42,13 @@
                         {% endfor %}
                         </select>
                     </div>
-                    </form>
+                </form>
+                {% if not utilisateurs %}
+                    {% if selected_Departement and selected_Departement != -1 %}
+                    <p class="text-danger">Aucun utilisateur disponible</p>
                     {% endif %}
-                    
-                    {% if not utilisateurs %}
-                        <p class="text-danger">Aucun utilisateur disponible</p>
-                    {% else %}
-                    <form method="POST" action=""   id="userForm">
+                {% else %}
+                <form method="POST" action=""   id="userForm">
                     <div class="mb-3">
                         <input type="hidden" name="arrondissementName1" value="{{ selected_arrondissement }}">
                         <input type="hidden" name="departementName1" value="{{ selected_Departement }}">
@@ -57,13 +59,9 @@
                         {% endfor %}
                         </select>
                     </div>
-                    </form>
-                    {% endif %}
-
-                {% if utilisateurs and selected_User and selected_User != -1 %}
-
-                    <h4>Modèle du matérial</h4>
-                    <form method="POST" action=""   id="typeForm">
+                </form>
+                {% if  selected_User and selected_User != -1 %}
+                <form method="POST" action=""   id="typeForm">
                     <div class="mb-3">
                         <input type="hidden" name="arrondissementName1" value="{{ selected_arrondissement }}">
                         <input type="hidden" name="departementName1" value="{{ selected_Departement }}">
@@ -75,12 +73,14 @@
                         {% endfor %}
                         </select>
                     </div>
-                    </form>
-                    
-                <form method="POST" action="{{ url_for('material.manage_Materials') }}">
-                    {% if not models %}
-                        <p class="text-danger">Aucun modèle disponible</p>
-                    {% else %}
+                </form>
+                {% if  selected_Type and selected_Type != -1 %}
+                {% if not models %}
+                    <p class="text-danger">Aucun modèle disponible</p>
+                {% else %}
+                    <h4>Informations sur le matérial</h4> 
+                    <form method="POST" action="{{ url_for('material.manage_Materials') }}">
+                        
                     <div class="mb-3">
                         <select class="form-control" id="ModelId" name="ModelId">
                         <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir un Modèl</option>
@@ -89,63 +89,67 @@
                         {% endfor %}
                         </select>
                     </div>
-                    {% endif %}
-                
-                    <h4>Informations sur le matérial</h4>
+            
                     <div class="mb-3">
-                        <label for="ort" class="form-label">Numéro invantaire</label>
+                        <label for="ort" class="form-label fw-bold">Numéro invantaire</label>
                         <input type="text" class="form-control" id="ort" name="ort" required>
                     </div>
+
                     <div class="mb-3">
-                        <label for="sn" class="form-label">Numéro de Série</label>
+                        <label for="sn" class="form-label fw-bold">Numéro de Série</label>
                         <input type="text" class="form-control" id="sn" name="sn" required>
                     </div>
-                    {% if selected_Type == 4 or selected_Type == 5 %}
-                        <div class="mb-3">
-                            <label for="osversion" class="form-label">Version du système d'exploitation</label>
-                            <select class="form-control" id="osversion" name="osversion">
-                            <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir une version</option>
-                            {% for osversion in osversions %}
+
+                    {% if selected_Type == 1 or selected_Type == 2 %}
+
+                    <div class="mb-3">
+                        <label for="osversion" class="form-label fw-bold">Version du système d'exploitation</label>
+                        <select class="form-control" id="osversion" name="osversion">
+                        <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir une version</option>
+                        {% for osversion in osversions %}
                                 <option value="{{ osversion.id }}" {% if selected_OsVersion == osversion.id %} selected {% endif %}>{{ osversion.os_version }}</option>         
-                            {% endfor %}
-                            </select>
-                        </div>
+                        {% endfor %}
+                        </select>
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="officeVersion" class="form-label">Version de Microsoft Office</label>
-                            <select class="form-control" id="officeVersion" name="officeVersion">
-                                <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir une version d'Office</option>
-                                {% for officeversion in officeVersions %}
+                    <div class="mb-3">
+                        <label for="officeVersion" class="form-label fw-bold">Version de Microsoft Office</label>
+                        <select class="form-control" id="officeVersion" name="officeVersion">
+                            <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir une version d'Office</option>
+                            {% for officeversion in officeVersions %}
                                     <option value="{{ officeversion.id }}" {% if selected_OfficeVersion == officeversion.id %} selected {% endif %}>{{ officeversion.office_version }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="antivirus" class="form-label">Antivirus</label>
-                            <select class="form-control" id="antivirus" name="antivirus">
-                                <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir un antivirus</option>
-                                {% for antivirus in antivirus %}
+                    <div class="mb-3">
+                        <label for="antivirus" class="form-label fw-bold">Antivirus</label>
+                        <select class="form-control" id="antivirus" name="antivirus">
+                            <option value="-1" disabled {% if not submitted %} selected {% endif %}>Choisir un antivirus</option>
+                            {% for antivirus in antivirus %}
                                     <option value="{{ antivirus.id }}" {% if selected_Antivirus == antivirus.id %} selected {% endif %}>{{ antivirus.antivirus_name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
                     {% endif %}
-
-
-
+                
                     <input type="hidden" name="arrondissementName1" value="{{ selected_arrondissement }}">
                     <input type="hidden" name="departementName1" value="{{ selected_Departement }}">
                     <input type="hidden" name="UserId1" value="{{ selected_User }}">
                     <button type="submit"  class="form-control btn btn-success">Ajouter Matérial</button>
-                </form>
-                {% endif %}
-            </div> 
+                    </form>
 
+                
+
+                {% endif %}
+                
+                {% endif %}
                 <div class="container">
-                    {% if list %}
-                    <h4 class="mt-4">Matériels pour {{ list[0][4] }}</h4>
-                    <table class="table table-striped  mt-4 ">
+                {% if list %}
+                <h3 class="mt-4">Matériels pour {{ list[0][4] }}</h3>
+
+                <table class="table table-striped  mt-4 ">
                         <thead>
                         <tr>
                           <th scope="col">Numéro invantaire</th>
@@ -164,15 +168,23 @@
                             <div class="btn-group float-end" role="group" aria-label="Basic example">
                             <a href="#" target="blank" class="btn btn-primary">Details</a>
                             <a href="#" class="btn btn-warning">Modifier</a>
-                            <a href="#" class="btn btn-danger">Supprimer</a>
+                            <a href="{{ url_for('material.delete_material', material_id=material[0].id) }}" class="btn btn-danger">Supprimer</a>
                         </div>
                           </td>
                         </tr>
                         {% endfor %}
-                      </tbody>
-                    </table>
-                    {% endif %}
-        </div>
+                </tbody>
+                </table>
+
+                {% else %}
+                    <p class="text-danger">Aucun matériel disponible pour cet utilisateur</p>
+                {% endif %}
+
+                </div>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </div>
     </div>
 </div>
 

@@ -22,12 +22,13 @@ def manage_Utilisateurs():
             departements = Departement.query.filter_by(arondissement=arrondissement_id).all()
             utilisateurs = Utilisateur.query.filter_by(departement=departement_id).all()
             return render_template('manage_Utilisateurs.html', name=session['user'], arrondissements=arrondissements, selected_arrondissement=int(arrondissement_id), departements=departements, selected_departement= int(departement_id), utilisateurs=utilisateurs)
-        if 'utilisateurName' in request.form:
+        if 'utilisateurName' in request.form and 'telephone' in request.form:
             departement_id = request.form['departementName1']
             NomUtilisateur = request.form['utilisateurName']
+            Telephone = request.form['telephone']
             arrondissement_id = request.form['arrondissementName2']
             departements = Departement.query.filter_by(arondissement=arrondissement_id).all()
-            newUtilisateur = Utilisateur(nomUtilisateur=NomUtilisateur, departement=departement_id)
+            newUtilisateur = Utilisateur(nomUtilisateur=NomUtilisateur, Telephone=Telephone, departement=departement_id)
             db.session.add(newUtilisateur) 
             db.session.commit()
             utilisateurs = Utilisateur.query.filter_by(departement=departement_id).all()
@@ -45,6 +46,7 @@ def update_Utilisateur(id):
     arrondissement = Arondissement.query.get(departement.arondissement)
     if request.method == 'POST':
         utilisateur.nomUtilisateur = request.form['utilsateurName']
+        utilisateur.Telephone = request.form['telephone']
         db.session.commit()
         departements = Departement.query.filter_by(arondissement=arrondissement.id).all()
         return render_template('manage_Utilisateurs.html', arrondissements=Arondissement.query.all(), departements=departements, name=session['user'], selected_arrondissement=int(arrondissement.id), selected_departement=int(departement.id), utilisateurs=Utilisateur.query.filter_by(departement=departement.id).all())

@@ -28,6 +28,7 @@ class Departement(db.Model):
 class Utilisateur(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nomUtilisateur = db.Column(db.String(50), unique=True, nullable=False)
+    Telephone = db.Column(db.String(20), nullable=True)
     departement = db.Column(db.Integer, db.ForeignKey('departement.id'), nullable=False)
 
     def __repr__(self):
@@ -84,9 +85,9 @@ class Material(db.Model):
     inventaire_number = db.Column(db.String(10), unique=True, nullable=False)
     model_id = db.Column(db.Integer, db.ForeignKey('model.id'), nullable=False)
     utilisateur_id = db.Column(db.Integer, db.ForeignKey('utilisateur.id'), nullable=False)
-    os_version_id = db.Column(db.Integer, db.ForeignKey('os_versions.id'), nullable=False)
-    office_version_id = db.Column(db.Integer, db.ForeignKey('officeversions.id'), nullable=False)
-    antivirus_id = db.Column(db.Integer, db.ForeignKey('antivirus.id'), nullable=False)
+    os_version_id = db.Column(db.Integer, db.ForeignKey('os_versions.id'), nullable=True)
+    office_version_id = db.Column(db.Integer, db.ForeignKey('officeversions.id'), nullable=True)
+    antivirus_id = db.Column(db.Integer, db.ForeignKey('antivirus.id'), nullable=True)
     
     
 

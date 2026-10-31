@@ -1,4 +1,5 @@
 from flask import  Flask
+
 from dashbord.models import ModelMaterial
 from main.main import main
 from about.about import about
@@ -12,8 +13,8 @@ from dashbord.marques import Marques
 from dashbord.material import material
 
 from extentions import db
-from models import User, OsVersions, Officeversions, Antivirus, MaterialType, Marque
 
+from models import Arondissement, User, OsVersions, Officeversions, Antivirus, MaterialType, Marque
 from werkzeug.security import generate_password_hash
 
 def createApp():
@@ -39,9 +40,18 @@ def createApp():
     
 
     db.init_app(app)
+    Arondissements = [
+        "Siege Fquih Ben Salah",
+        "Arrondissement Beni Amir",
+        "Arrondissement Souk Sebt",
+        "Arrondissement Afourar",
+        "Arrondissement Sidi Jaber",
+        "Arrondissement Ouled Mbrek",
+        "Arrondissement Zidouh",
+    ]
     TypesMaterial = [
-        "Ordinateur Portable",
         "Ordinateur de Bureau",
+        "Ordinateur Portable",
         "Imprimante Laser B/W",
         "Imprimante Laser Couleur",
         "Scanner",
@@ -49,24 +59,21 @@ def createApp():
     ]
     Material_Marques = [
         "HP",
-        "Dell",
-        "Lenovo",
-        "Acer",
-        "Epson",
-        "Canon",
-        "Samsung",
+        "DELL",
+        "LENOVO",
+        "ACER",
+        "EPSON",
+        "CANON",
+        "SAMSUNG",
+        'EATON',
+        'INFOSEC',  
     ]
-
-
-
-
     os_versions = [
         "Windows 11",
         "Windows 10",
         "Windows 8.1",
         "Windows 7"
     ]
-    
     office_versions = [
         "Microsoft Office 2010",
         "Microsoft Office 2013",
@@ -74,7 +81,6 @@ def createApp():
         "Microsoft Office 2019",
         "Microsoft Office 2021",
     ]
-    
     antivirus_versions = [
         "Kaspersky Enddpoint Security",
         "Kaspersky Internet Security Plus",
@@ -83,20 +89,22 @@ def createApp():
 
     with app.app_context():
         db.create_all()
-        db.session.commit()
 
-
+        for arondissement in Arondissements:
+            if not Arondissement.query.filter_by(arondissement=arondissement).first():
+                db.session.add(Arondissement(arondissement=arondissement))
+                db.session.commit()
+        
         for type_material in TypesMaterial:
             if not MaterialType.query.filter_by(typeMaterial=type_material).first():
                 db.session.add(MaterialType(typeMaterial=type_material))
                 db.session.commit()
+        
         for marque in Material_Marques:
             if not Marque.query.filter_by(MarqueName=marque).first():
                 db.session.add(Marque(MarqueName=marque))
                 db.session.commit()
-
-
-
+        
         for version in os_versions:
             if not OsVersions.query.filter_by(os_version=version).first():
                 db.session.add(OsVersions(os_version=version))
@@ -113,6 +121,7 @@ def createApp():
                 db.session.commit()
 
         user = User(name='adil', password=generate_password_hash('infoware'))
+
         if not User.query.filter_by(name='adil').first():
             db.session.add(user)
             db.session.commit()

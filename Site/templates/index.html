@@ -3,12 +3,93 @@
 
 {% block body %}
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" id="section-existante">
         <div class="col-12 text-center my-3">
             <h2>Page d'accueil</h2>
             <p>Ceci est la page d'accueil de notre site web.</p>
             <a href="{{ url_for('admin.admin') }}" class="btn btn-primary">Tableau de bord administration</a>
         </div>
+        <div class="col-12 text-left my-3">
+            <h2>Liste des arrondissements</h2>
+            <div class="row list-group">
+                {% for arrondissement in arrondissements %}
+                <form method="GET" action="{{ url_for('main.show_departements') }}">
+                    <button name="id" value="{{ arrondissement.id }}" type="submit" class="list-group-item list-group-item-action list-group-item-primary text-black-50 fw-bold">
+                    {{ arrondissement.arondissement }}
+                    </button>
+                </form>
+
+                {% if departements and id == arrondissement.id or arr_id == arrondissement.id %}
+                {% for departement in departements %}
+                <form method="GET"  action="{{ url_for('main.show_departements') }}">
+                    <button name="depa_id" value="{{ departement.id }}" type="submit" class="list-group-item list-group-item-action list-group-item-warning text-black fw-bold">
+                        {{ departement.departement }}
+                    </button>
+                    <input type="hidden" name="id" value="{{ departement.arondissement }}">
+                    <input type="hidden" name="arr_id" value="{{ departement.arondissement }}">
+                </form>
+                
+                {% if utilisateurs and depa_id == departement.id %}
+                {% for utilisateur in utilisateurs %}
+               <form id = "myform" method="GET"  action="{{ url_for('main.show_departements') }}">
+                    <div class="d-flex justify-content-between">
+                    <button name="user_id" value="{{ utilisateur.id }}" type="submit" class="list-group-item list-group-item-action list-group-item-light text-success fw-bold">
+                        {{ utilisateur.nomUtilisateur }}
+                    </button>
+                    <button type="button" type="submit" class="btn btn-outline-success" data-username="{{ utilisateur.nomUtilisateur }}" onclick="afficherDetailmateriel(this.dataset.username)">Details matériel</button>
+                    <input type="hidden" name="id" value="{{ departement.arondissement }}">
+                    <input type="hidden" name="arr_id" value="{{ departement.arondissement }}">
+                    <input type="hidden" name="depa_id" value="{{ departement.id }}">
+                    </div>
+               </form>
+
+                {% endfor %}
+                {% endif %}
+
+                {% endfor %}
+                {% endif %}
+
+                {% endfor %}
+            </div>         
+        </div>
     </div>
+    <div class="row" id="section-alternative">
+        <div class="col-12 text-center my-3">
+            <h2>Section alternative</h2>
+            <p id="nom_utilisateur" >Aucune donnée disponible pour l'instant.</p>
+            <button class="btn btn-secondary" onclick="addLocalVariable()">Ajouter</button>
+        </div>
+    
+    </div>
+
 </div>
+<script>
+
+    function afficherDetailmateriel(nomUtilisateur) {
+        localStorage.setItem('utilisateur', nomUtilisateur);
+        document.getElementById('section-existante').style.display = 'none';
+        document.getElementById('section-alternative').style.display = 'block';
+        document.getElementById('nom_utilisateur').innerHTML=localStorage.getItem('utilisateur').toString();
+    }
+
+    function addLocalVariable() {
+        // supprimer la valeur du variable dans une localestorage
+        localStorage.removeItem('utilisateur');
+        document.getElementById('section-alternative').style.display = 'none';
+        document.getElementById('section-existante').style.display = 'block';
+        
+        
+    }
+    // virifier si la variable existe dans le localstorage pour afficher la section alternative
+    if (localStorage.getItem('utilisateur')) {  
+        document.getElementById('section-existante').style.display = 'none';
+        document.getElementById('section-alternative').style.display = 'block';
+        
+        document.getElementById('nom_utilisateur').innerHTML=localStorage.getItem('utilisateur').toString();
+
+    } else {
+        document.getElementById('section-existante').style.display = 'block';
+    }
+</script>
 {% endblock %}
+

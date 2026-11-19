@@ -115,7 +115,7 @@ def manage_Materials():
                 marqueName = Marque.query.get(model.marque_id)
                 user_name = Utilisateur.query.get(material.utilisateur_id)
                 modelList.append([material, model.modelname, MaterialTypeName.typeMaterial, marqueName.MarqueName, user_name.nomUtilisateur])
-                
+              
             return render_template('Manage_Material.html',  name=session['user'], submitted=False, arrondissements=arrondissements, departements=departements, utilisateurs=utilisateurs, selected_User=user_id, selected_Departement=departementId, selected_arrondissement=arrondissementId, types=types, list=modelList)
     arrondissementId = request.args.get('selected_arrondissement', type=int)
     departementId = request.args.get('selected_Departement', type=int)

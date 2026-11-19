@@ -1,26 +1,47 @@
 from flask import Blueprint, render_template
 from flask import Blueprint, render_template, request, redirect, url_for
-from models import Arondissement, Departement, Model, Utilisateur, Material
+from models import Arondissement, Departement, Model, Utilisateur, Material, Marque, MaterialType
 
 main = Blueprint('main', __name__)
 
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'])
 def home():
     arrondissements = Arondissement.query.all()
-    return render_template("index.html", arrondissements=arrondissements)
+    user_id=None
+    user=None
+    Materials = []
+    if request.method=='POST':
+        user_id=request.form.get('utilisateur_id')
+        user=Utilisateur.query.filter_by(id=user_id).first()
+    
+        materialsListe = Material.query.filter_by(utilisateur_id=user_id).all()
+        
+        for m in materialsListe: 
+            model=Model.query.filter_by(id=m.model_id).first()
+            type= MaterialType.query.filter_by(id=model.type_material_id).first()
+            marque = Marque.query.filter_by(id=model.marque_id).first()
+            mat={'inventaire_number' : m.inventaire_number,'serial_number': m.serial_number, 'modelname' : model.modelname, 'typeMaterial' :type.typeMaterial,'MarqueName' : marque.MarqueName }
+            Materials.append(mat)
+    return render_template("index.html", arrondissements=arrondissements, user=user, Materials=Materials)
 
 @main.route('/departements/', methods=['GET'])
 def show_departements():
     arrondissements = Arondissement.query.all()
-    if request.method == 'GET':
-        dep_id=request.args.get('id', type=int)
-        arr_id=request.args.get('arr_id', type=int)
-        departements = Departement.query.filter_by(arondissement=dep_id).all()
-        depa_id=request.args.get('depa_id', type=int)
-        utilisateurs = Utilisateur.query.filter_by(departement=depa_id).all()
-        user_id = request.args.get('user_id', type=int)
-        materials = Material.query.filter_by(utilisateur_id=user_id).all()
-        materialsListe =[]
-        for mat in materials:
-            materialsListe.append({"inventaire_number": mat.inventaire_number, "serial_number": mat.serial_number, "modelname": Model.query.get(mat.model_id).modelname})
-        return render_template("index.html", arrondissements=arrondissements, departements=departements, id=dep_id, arr_id=arr_id, depa_id=depa_id, user_id=user_id, utilisateurs=utilisateurs, materials=materials, materialsListe=materialsListe)
+    id = request.args.get('id')
+    Materials = []
+    departements = Departement.query.filter_by(arondissement=id).all()
+    dep_id = request.args.get('depa_id')
+    utilisateurs = Utilisateur.query.filter_by(departement=dep_id).all()
+    user_id=request.args.get('user_id')
+    user=Utilisateur.query.filter_by(id=user_id).first()
+    materialsListe = Material.query.filter_by(utilisateur_id=user_id).all()
+            
+    for m in materialsListe: 
+        model=Model.query.filter_by(id=m.model_id).first()
+        type= MaterialType.query.filter_by(id=model.type_material_id).first()
+        marque = Marque.query.filter_by(id=model.marque_id).first()
+        mat={'inventaire_number' : m.inventaire_number,'serial_number': m.serial_number, 'modelname' : model.modelname, 'typeMaterial' :type.typeMaterial,'MarqueName' : marque.MarqueName }
+        Materials.append(mat)
+
+    print(id)
+    return render_template("index.html", arrondissements=arrondissements, departements=departements, utilisateurs=utilisateurs, user=user, Materials=Materials)

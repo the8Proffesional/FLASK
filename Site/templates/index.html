@@ -9,6 +9,7 @@
             <p>Ceci est la page d'accueil de notre site web.</p>
             <a href="{{ url_for('admin.admin') }}" class="btn btn-primary">Tableau de bord administration</a>
         </div>
+
         <div class="col-12 text-left my-3">
             <h2>Liste des arrondissements</h2>
             <div class="row list-group">
@@ -18,78 +19,124 @@
                     {{ arrondissement.arondissement }}
                     </button>
                 </form>
-
-                {% if departements and id == arrondissement.id or arr_id == arrondissement.id %}
+                
                 {% for departement in departements %}
-                <form method="GET"  action="{{ url_for('main.show_departements') }}">
+                {% if departements and  departement.arondissement==arrondissement.id %}
+                
+                <form  method="GET"  action="{{ url_for('main.show_departements') }}">
                     <button name="depa_id" value="{{ departement.id }}" type="submit" class="list-group-item list-group-item-action list-group-item-warning text-black fw-bold">
-                        {{ departement.departement }}
+                        {{ departement.departement}}
                     </button>
                     <input type="hidden" name="id" value="{{ departement.arondissement }}">
                     <input type="hidden" name="arr_id" value="{{ departement.arondissement }}">
                 </form>
-                
-                {% if utilisateurs and depa_id == departement.id %}
+
                 {% for utilisateur in utilisateurs %}
-               <form id = "myform" method="GET"  action="{{ url_for('main.show_departements') }}">
-                    <div class="d-flex justify-content-between">
-                    <button name="user_id" value="{{ utilisateur.id }}" type="submit" class="list-group-item list-group-item-action list-group-item-light text-success fw-bold">
-                        {{ utilisateur.nomUtilisateur }}
+                {% if utilisateurs and  utilisateur.departement==departement.id %}
+                
+                <form  method="GET"  action="{{ url_for('main.show_departements') }}">
+                    <button name="user_id" id="user_id" value="{{ utilisateur.id }}" type="submit" onclick="setUserId(this)" class="list-group-item list-group-item-action list-group-item-success text-danger fw-bold">
+                        {{ utilisateur.nomUtilisateur}}
                     </button>
-                    <button type="button" type="submit" class="btn btn-outline-success" data-username="{{ utilisateur.nomUtilisateur }}" onclick="afficherDetailmateriel(this.dataset.username)">Details matériel</button>
                     <input type="hidden" name="id" value="{{ departement.arondissement }}">
                     <input type="hidden" name="arr_id" value="{{ departement.arondissement }}">
                     <input type="hidden" name="depa_id" value="{{ departement.id }}">
-                    </div>
-               </form>
-
-                {% endfor %}
+                </form>
                 {% endif %}
-
                 {% endfor %}
+
                 {% endif %}
+                {% endfor %}
+                
+                
 
                 {% endfor %}
             </div>         
         </div>
+        
     </div>
+    <form id="myform" action="{{ url_for('main.home') }}" method="POST" style="display:none">
+        <input type="hidden" name="utilisateur_id" id="user">
+    </form>
+
     <div class="row" id="section-alternative">
         <div class="col-12 text-center my-3">
-            <h2>Section alternative</h2>
-            <p id="nom_utilisateur" >Aucune donnée disponible pour l'instant.</p>
-            <button class="btn btn-secondary" onclick="addLocalVariable()">Ajouter</button>
+            <h2>Liste Materials Utilisateur</h2>
+            <div>
+                <h2 class="h4 text-primary" id="nom_utilisateur">{{ user.nomUtilisateur }} </h2>
+                <p>Téléphone: {{ user.Telephone }}</p>
+                <button onclick="removeLocalVariable()" class="mx-3 btn btn-danger text-decoration-underline">Oublier Utilisateur</button>
+            </div>
+            <div class="m-4 text-start">
+                <table class="table table-striped  mt-4 ">
+                        <thead>
+                        <tr>
+                          <th scope="col">Modél</th>
+                          <th scope="col">ORT</th>
+                          <th scope="col">N/S</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for material in Materials %}
+                        <tr>
+                          <td>{{material.typeMaterial}} {{material.MarqueName}} {{material.modelname}}</td>
+                          <td>{{material.inventaire_number}}</td>
+                          <td>{{material.serial_number}}</td>
+                          <td>
+                            <div class="btn-group float-end" role="group" aria-label="Basic example">
+                                <a href="#" target="blank" class="btn btn-primary">Details</a>
+                                <a href="#" class="btn btn-warning">Déclaration de Panne</a>
+                            </div>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+                </table>    
+            </div>       
         </div>
-    
     </div>
-
+    
 </div>
 <script>
+function setUserId(button) {
+    const userId = button.value;
+    localStorage.setItem('user_id', userId);
 
-    function afficherDetailmateriel(nomUtilisateur) {
-        localStorage.setItem('utilisateur', nomUtilisateur);
+    const hiddenInput = document.getElementById('user');
+    if (hiddenInput) {
+        hiddenInput.value = userId;
+    }
+}
+window.addEventListener('DOMContentLoaded', () => {
+    //console.log(sessionStorage.getItem('envoye'));
+    if (!sessionStorage.getItem('envoye')) {
+        const valeur = localStorage.getItem('user_id');
+        console.log(valeur);
+    if (valeur !== null) {
+        sessionStorage.setItem('envoye', '1');
+        document.getElementById('user').value=valeur;
+        document.getElementById('myform').submit();
+    }
+    }else {
+        sessionStorage.removeItem('envoye');
+    }
+});
+
+if (localStorage.getItem('user_id')) {  
         document.getElementById('section-existante').style.display = 'none';
         document.getElementById('section-alternative').style.display = 'block';
-        document.getElementById('nom_utilisateur').innerHTML=localStorage.getItem('utilisateur').toString();
-    }
-
-    function addLocalVariable() {
-        // supprimer la valeur du variable dans une localestorage
-        localStorage.removeItem('utilisateur');
+} 
+else {
+        document.getElementById('section-existante').style.display = 'block';
         document.getElementById('section-alternative').style.display = 'none';
-        document.getElementById('section-existante').style.display = 'block';
-        
-        
-    }
-    // virifier si la variable existe dans le localstorage pour afficher la section alternative
-    if (localStorage.getItem('utilisateur')) {  
-        document.getElementById('section-existante').style.display = 'none';
-        document.getElementById('section-alternative').style.display = 'block';
-        
-        document.getElementById('nom_utilisateur').innerHTML=localStorage.getItem('utilisateur').toString();
-
-    } else {
-        document.getElementById('section-existante').style.display = 'block';
-    }
+}
+function removeLocalVariable() {
+        // supprimer la valeur du variable dans une localestorage
+    localStorage.removeItem('user_id');
+    document.getElementById('section-alternative').style.display = 'none';
+    document.getElementById('section-existante').style.display = 'block';
+}
 </script>
 {% endblock %}
 

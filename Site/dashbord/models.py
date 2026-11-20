@@ -12,26 +12,39 @@ def manage_Models():
         return redirect(url_for('adminstration.login')) 
     MaterialTypes = MaterialType.query.all()
     Marques = Marque.query.all()
-    models = Model.query.all()
+    
     if request.method == 'POST':
-        selected_TypeMaterial = request.form.get('TypeName', type=int)
-        selected_Marque = request.form.get('MarqueName', type=int)
-        ModelName = request.form.get('ModelName')
-        support = request.form.get('SupportName')
+        if 'TypeName1' in request.form and 'MarqueName1' not in request.form:
+            selected_TypeMaterial = request.form.get('TypeName1', type=int)
+            models = Model.query.filter_by(type_material_id=selected_TypeMaterial).all()
+            return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=True, selected_TypeMaterial=selected_TypeMaterial, selected_Marque=None)
+        
+        if 'MarqueName1' in request.form:
+            selected_TypeMaterial = request.form.get('typeMaterial', type=int)
+            print(selected_TypeMaterial)
+            selected_Marque = request.form.get('MarqueName1', type=int)
+            models = Model.query.filter_by(type_material_id=selected_TypeMaterial, marque_id=selected_Marque).all()
+            return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=True, selected_TypeMaterial=selected_TypeMaterial, selected_Marque=selected_Marque)
+        
+        if 'typeMaterial'  in request.form and 'MarqueMaterial'  in request.form:
+            selected_TypeMaterial = request.form.get('typeMaterial', type=int)
+            selected_Marque = request.form.get('MarqueMaterial', type=int)
+            ModelName = request.form.get('ModelName')
+            support = request.form.get('SupportName')
         
         
-        new_model = Model(
-            modelname=ModelName,
-            type_material_id=selected_TypeMaterial,
-            marque_id=selected_Marque,
-            support_uri=support
-        )
-        db.session.add(new_model)
-        db.session.commit()
-        models = Model.query.all()
+            new_model = Model(
+                modelname=ModelName,
+                type_material_id=selected_TypeMaterial,
+                marque_id=selected_Marque,
+                support_uri=support
+            )
+            db.session.add(new_model)
+            db.session.commit()
+            models = Model.query.filter_by(type_material_id=selected_TypeMaterial, marque_id=selected_Marque).all()
         
-        return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=True, selected_TypeMaterial=selected_TypeMaterial, selected_Marque=selected_Marque)
-    return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=False)
+            return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, models=models, submitted=True, selected_TypeMaterial=selected_TypeMaterial, selected_Marque=selected_Marque)
+    return render_template('Manage_materials.html',  name=session['user'], TypeMaterials=MaterialTypes, Marques=Marques, submitted=False)
 
 @ModelMaterial.route('/update_Model/<int:model_id>', methods=['GET', 'POST'])
 def update_model(model_id):   

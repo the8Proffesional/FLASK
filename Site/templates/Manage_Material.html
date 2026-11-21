@@ -167,7 +167,7 @@
                           <td>
                             <div class="btn-group float-end" role="group" aria-label="Basic example">
                             <a href="#" target="blank" class="btn btn-primary">Details</a>
-                            <a href="#" class="btn btn-warning">Modifier</a>
+                            <a href="{{ url_for('material.update_material', material_id=material[0].id) }}" class="btn btn-warning">Modifier</a>
                             <a href="{{ url_for('material.delete_material', material_id=material[0].id) }}" class="btn btn-danger">Supprimer</a>
                         </div>
                           </td>

@@ -153,7 +153,38 @@ def manage_Materials():
 
     return render_template('Manage_Material.html',  name=session['user'], submitted=False, arrondissements=arrondissements, selected_arrondissement=-1)
 
+@material.route('/detail_material/<int:material_id>', methods=['GET'])
+def detail_material(material_id):
+    if 'user' not in session:
+        return redirect(url_for('adminstration.login'))
+    
+    material = Material.query.get_or_404(material_id)
+    model = Model.query.get(material.model_id)
+    type_material = MaterialType.query.get(model.type_material_id)
+    marque = Marque.query.get(model.marque_id)
+    utilisateur = Utilisateur.query.get(material.utilisateur_id)
+    departement = Departement.query.get(utilisateur.departement)
+    arrondissement = Arondissement.query.get(departement.arondissement)
+    
+    os_version = OsVersions.query.get(material.os_version_id) if material.os_version_id else None
+    office_version = Officeversions.query.get(material.office_version_id) if material.office_version_id else None
+    antivirus = Antivirus.query.get(material.antivirus_id) if material.antivirus_id else None
+    
+    return render_template('detailmaterial.html', 
+                           name=session['user'], 
+                           material=material, 
+                           model=model, 
+                           type_material=type_material, 
+                           marque=marque, 
+                           utilisateur=utilisateur, 
+                           departement=departement, 
+                           arrondissement=arrondissement,
+                           os_version=os_version,
+                           office_version=office_version,
+                           antivirus=antivirus)
+
 @material.route('/update_material/<int:material_id>', methods=['GET', 'POST'])
+
 def update_material(material_id):
     if 'user' not in session:
         return redirect(url_for('adminstration.login')) 

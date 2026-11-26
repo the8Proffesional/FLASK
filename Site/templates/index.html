@@ -83,12 +83,14 @@
                           <td>{{material.typeMaterial}} {{material.MarqueName}} {{material.modelname}}</td>
                           <td>{{material.inventaire_number}}</td>
                           <td>{{material.serial_number}}</td>
-                          <td>
+                                                    <td>
                             <div class="btn-group float-end" role="group" aria-label="Basic example">
-                                <a href="#" target="blank" class="btn btn-primary">Details</a>
+                                <a href="{{ url_for('main.detail_material', material_id=material.id) }}" target="blank" class="btn btn-primary">Details</a>
                                 <a href="#" class="btn btn-warning">Déclaration de Panne</a>
+                               
                             </div>
                           </td>
+
                         </tr>
                         {% endfor %}
                 </tbody>

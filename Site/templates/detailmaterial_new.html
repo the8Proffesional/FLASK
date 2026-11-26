@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %} Détails Matériel {% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 my-5">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Fiche Matériel : {{ material.inventaire_number }}</h4>
+                    <span class="badge bg-light text-primary fs-6">{{ type_material.typeMaterial }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 border-end">
+                            <h5 class="text-muted border-bottom pb-2 mb-3">Technique</h5>
+                            <p><strong>Inventaire:</strong> {{ material.inventaire_number }}</p>
+                            <p><strong>Série:</strong> {{ material.serial_number }}</p>
+                            <p><strong>Marque:</strong> {{ marque.MarqueName }}</p>
+                            <p><strong>Modèle:</strong> {{ model.modelname }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-muted border-bottom pb-2 mb-3">Affectation</h5>
+                            <p><strong>Utilisateur:</strong> {{ utilisateur.nomUtilisateur }}</p>
+                            <p><strong>Département:</strong> {{ departement.departement }}</p>
+                            <p><strong>Arrondissement:</strong> {{ arrondissement.arondissement }}</p>
+                        </div>
+                    </div>
+                    
+                    {% if os_version or office_version or antivirus %}
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h5 class="text-muted border-bottom pb-2 mb-3">Logiciels</h5>
+                            {% if os_version %}<span class="badge bg-secondary me-2">OS: {{ os_version.os_version }}</span>{% endif %}
+                            {% if office_version %}<span class="badge bg-info text-dark me-2">Office: {{ office_version.office_version }}</span>{% endif %}
+                            {% if antivirus %}<span class="badge bg-success me-2">Antivirus: {{ antivirus.antivirus_name }}</span>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="javascript:history.back()" class="btn btn-secondary">Retour</a>
+                    {% if name %}
+                    <div>
+                        <a href="{{ url_for('material.update_material', material_id=material.id) }}" class="btn btn-warning">Modifier</a>
+                        <a href="{{ url_for('material.delete_material', material_id=material.id) }}" class="btn btn-danger" onclick="return confirm('Supprimer?')">Supprimer</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

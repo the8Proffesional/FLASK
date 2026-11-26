@@ -9,7 +9,8 @@ material = Blueprint('material', __name__, template_folder='templates')
 @material.route('/manage_Materials', methods=['GET', 'POST'])
 def manage_Materials():
     if 'user' not in session:
-        return redirect(url_for('adminstration.login'))
+        return redirect(url_for('admin.admin'))
+
     
     arrondissements = Arondissement.query.all()
     
@@ -155,8 +156,8 @@ def manage_Materials():
 
 @material.route('/detail_material/<int:material_id>', methods=['GET'])
 def detail_material(material_id):
-    if 'user' not in session:
-        return redirect(url_for('adminstration.login'))
+    if 'user' not in session and 'user_id' not in request.form:
+        return redirect(url_for('admin.admin'))
     
     material = Material.query.get_or_404(material_id)
     model = Model.query.get(material.model_id)
@@ -187,7 +188,8 @@ def detail_material(material_id):
 
 def update_material(material_id):
     if 'user' not in session:
-        return redirect(url_for('adminstration.login')) 
+        return redirect(url_for('admin.admin'))
+ 
     material = Material.query.get_or_404(material_id)
     models = Model.query.all()
     utilisateurs = Utilisateur.query.all()
@@ -205,7 +207,8 @@ def update_material(material_id):
 @material.route('/delete_material/<int:material_id>', methods=['GET'])
 def delete_material(material_id):
     if 'user' not in session:
-        return redirect(url_for('adminstration.login'))
+        return redirect(url_for('admin.admin'))
+
      
     material = Material.query.get_or_404(material_id)
     user = Utilisateur.query.get(material.utilisateur_id)
